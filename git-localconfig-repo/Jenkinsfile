@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    tools {
+        /* the tool name must be pre-configured in Jenkins under Manage Jenkins -> Global Tool Configuration */
+        maven 'MAVEN_HOME'
+    }
+    options {
+        gitLabConnection('gitlab_server')
+    }
+    triggers {
+        gitlab(
+            triggerOnPush: true,
+            triggerOnMergeRequest: true,
+            branchFilterType: 'All'
+        )
+    }
+    stages {
+        stage('Package') {
+            when {
+                anyOf {
+                    branch 'develop'
+                    branch 'staging'
+                }
+            }
+            steps {
+                sh 'mvn clean package -Dmaven.test.skip=true -Dskip.npm=true -Dskip.yarn=true -Dskip.webpack=true'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                sh 'mvn clean test'
+            }
+        }
+    }
+}
