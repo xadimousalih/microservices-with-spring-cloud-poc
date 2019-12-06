@@ -1,6 +1,13 @@
 # microservices-with-spring-cloud-poc
 Implementation of a microservices architecture with spring cloud components by xadimouSALIH
 
+
+**Architecture Schemas**
+
+![Architecture Schemas](https://github.com/xadimousalih/microservices-with-spring-cloud-poc/blob/master/microservices-with-spring-cloud-poc.png)
+
+**Usage**
+
 1. Start **spring-cloud-config-server** which is the Spring cloud Bus embedded a git repository that centralize all project configurations
 
 2. Start **config-management-service** microservice which manage configurations
